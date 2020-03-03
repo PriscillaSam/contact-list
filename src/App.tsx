@@ -1,13 +1,27 @@
-import React from "react";
+import React from 'react';
+import Container from './components/molecules/Container';
 
-function App() {
+import fetchContacts from './utils/api';
+import { normalizeContacts } from './utils/helpers';
+
+type AppState = 'idle' | 'fetching' | 'done';
+
+const App = () => {
+  const [contacts, setContacts] = React.useState([]);
+  const [state, setState] = React.useState<AppState>('idle');
+
+  React.useEffect(() => {
+    (async function() {
+      const { results } = await fetchContacts(2);
+      setContacts(results);
+    })();
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <h1>Contact List</h1>
-      </header>
+      <Container />
     </div>
   );
-}
+};
 
 export default App;
