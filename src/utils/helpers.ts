@@ -1,4 +1,7 @@
-export const createUserContact = (contact: IApiResponse, index: number) => {
+export const createUserContact = (
+  contact: IApiResponse,
+  index: number,
+): IUserContact => {
   return {
     id: index,
     firstName: contact.name.first,
@@ -7,14 +10,14 @@ export const createUserContact = (contact: IApiResponse, index: number) => {
     email: contact.email,
     username: contact.login.username,
     phone: contact.phone,
-    street: contact.location.street,
+    street: `${contact.location.street.number} ${contact.location.street.name}`,
     city: contact.location.city,
     state: contact.location.state,
     postcode: contact.location.postcode,
     avatar: {
       ...contact.picture,
     },
-  } as IUserContact;
+  };
 };
 
 const createAlphabetGrouping = (variant: 'contact' | 'count') => {
@@ -32,11 +35,14 @@ const createAlphabetGrouping = (variant: 'contact' | 'count') => {
   }, {});
 };
 
+export const sortContacts = (contacts: IApiResponse[]) =>
+  contacts.sort((a, b) => (a.name.last > b.name.last ? 1 : -1));
+
 export const normalizeContacts = (contacts: IApiResponse[]) => {
-  const alphabetMapping = createAlphabetGrouping('contact');
+  let contactMapping = createAlphabetGrouping('contact');
   const alphabetCountMapping = createAlphabetGrouping('count');
 
-  return contacts.reduce(
+  contactMapping = sortContacts(contacts).reduce(
     (acc, contact, index) => {
       const userContact = createUserContact(contact, index);
       const letterGroup = userContact.lastName[0].toUpperCase();
@@ -48,9 +54,8 @@ export const normalizeContacts = (contacts: IApiResponse[]) => {
 
       return acc;
     },
-    alphabetMapping as IContactObject,
+    contactMapping as IContactObject,
   );
-};
 
-export const sortNames = (lastNames: string[]) =>
-  lastNames.sort((a, b) => (a > b ? 1 : -1));
+  return { contactMapping, alphabetCountMapping };
+};

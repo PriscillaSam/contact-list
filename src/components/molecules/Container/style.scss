@@ -1,0 +1,30 @@
+.Container {
+  display: flex;
+  width: 90%;
+  margin: 5% auto;
+  background: #f4f4f7;
+  box-shadow: 10px 4px 250px rgba(0, 0, 0, 0.25);
+  position: relative;
+
+  &-header {
+    color: #c4c4c4;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+  }
+
+  &-alphabet {
+    width: 10%;
+    display: grid;
+    grid-template-columns: 1fr;
+    position: absolute;
+    overflow: scroll;
+    bottom: 0;
+    top: 70px;
+    left: -30px;
+    padding: 10px;
+
+    &-button {
+      margin-bottom: 20px;
+    }
+  }
+}
