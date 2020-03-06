@@ -8,6 +8,8 @@
   font-size: 18px;
   color: #ffffff;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+  transition: ease-out 0.4s;
+  outline: unset;
 
   &-badge {
     width: 20px;
@@ -28,8 +30,14 @@
   &-active {
     background: #db9730;
   }
+
   &-disabled {
     cursor: not-allowed;
     background: #c4c4c4;
+
+    .LetterButton-badge {
+      color: #c4c4c4;
+      background: #f0efef;
+    }
   }
 }

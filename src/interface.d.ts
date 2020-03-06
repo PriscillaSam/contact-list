@@ -56,11 +56,9 @@ interface IApiResponse {
   };
 }
 
-interface IContactObject {
-  [key: string]: {
-    contacts: {
-      [key: string]: IUserContact;
-    };
-    lastNames: string[];
+interface IContactGroup {
+  contacts: {
+    [key: string]: IUserContact;
   };
+  ids: number[];
 }

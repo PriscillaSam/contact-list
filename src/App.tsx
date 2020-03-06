@@ -1,11 +1,17 @@
 import React from 'react';
+
+import Loader from './components/atoms/Loader';
 import Container from './components/molecules/Container';
 
 import fetchContacts from './utils/api';
 import { normalizeContacts } from './utils/helpers';
 import './style.scss';
 
-type AppState = 'idle' | 'fetching' | 'done';
+type AppState = 'fetching' | 'done';
+type ContactsMap = {
+  [index: string]: IContactGroup;
+};
+
 const data = {
   results: [
     {
@@ -42,13 +48,13 @@ const data = {
 };
 
 const App = () => {
-  const [contacts, setContacts] = React.useState([]);
+  const [contacts, setContacts] = React.useState<ContactsMap>({});
   const [alphabelCountMap, setAlphabetCountMap] = React.useState({});
-  const [state, setState] = React.useState<AppState>('idle');
+  const [state, setState] = React.useState<AppState>('fetching');
 
   React.useEffect(() => {
     (async function() {
-      const { results } = data;
+      const { results } = await fetchContacts(200);
 
       const { contactMapping, alphabetCountMapping } = normalizeContacts(
         results,
@@ -57,10 +63,21 @@ const App = () => {
       setContacts(contactMapping);
     })();
   }, []);
+  console.log(contacts);
+
+  React.useEffect(() => {
+    if (contacts['A']) {
+      setState('done');
+    }
+  }, [contacts]);
 
   return (
     <div className="App">
-      <Container alphabetCountMap={alphabelCountMap} contacts={contacts} />
+      {state === 'fetching' ? (
+        <Loader />
+      ) : (
+        <Container alphabetCountMap={alphabelCountMap} contacts={contacts} />
+      )}
     </div>
   );
 };

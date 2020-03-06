@@ -1,5 +1,4 @@
 .Container {
-  display: flex;
   width: 90%;
   margin: 5% auto;
   background: #f4f4f7;
@@ -7,13 +6,22 @@
   position: relative;
 
   &-header {
-    color: #c4c4c4;
-    font-family: 'Roboto', sans-serif;
-    font-weight: 400;
+    h1 {
+      color: #c4c4c4;
+      font-family: 'Roboto', sans-serif;
+      font-weight: 400;
+      margin-bottom: 10px;
+    }
+
+    &-divider {
+      width: 60px;
+      height: 2px;
+      background: #e5e5e5;
+    }
   }
 
   &-alphabet {
-    width: 10%;
+    width: 5%;
     display: grid;
     grid-template-columns: 1fr;
     position: absolute;
@@ -25,6 +33,25 @@
 
     &-button {
       margin-bottom: 20px;
+    }
+
+    @media screen and (max-width: 500px) {
+      width: 10%;
+    }
+  }
+
+  &-contacts {
+    margin-left: 7%;
+    width: 90%;
+    // height: 92%;
+
+    &-wrapper {
+      max-height: 92%;
+      margin-top: 20px;
+      overflow: scroll;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-column-gap: 10px;
     }
   }
 }

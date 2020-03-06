@@ -6,7 +6,7 @@ interface ILetterButtonProps {
   text: string;
   contactsCount: number;
   active: boolean;
-  onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  onClickHandler: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 const LetterButton: React.FC<ILetterButtonProps> = props => {
@@ -17,7 +17,12 @@ const LetterButton: React.FC<ILetterButtonProps> = props => {
   });
 
   return (
-    <button className={classNames} onClick={props.onClick}>
+    <button
+      className={classNames}
+      onClick={props.onClickHandler}
+      data-value={props.text}
+      disabled={props.contactsCount === 0}
+    >
       {props.text}
       <span className="LetterButton-badge">{props.contactsCount}</span>
     </button>
