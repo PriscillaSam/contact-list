@@ -6,7 +6,7 @@ export const createUserContact = (
     id: index,
     firstName: contact.name.first,
     lastName: contact.name.last,
-    fullName: `${contact.name.first} ${contact.name.last}`,
+    fullName: `${contact.name.first} ${contact.name.last.toUpperCase()}`,
     email: contact.email,
     username: contact.login.username,
     phone: contact.phone,
@@ -28,7 +28,7 @@ const createAlphabetGrouping = (variant: 'contact' | 'count') => {
     } else {
       acc[letter] = {
         contacts: {},
-        lastNames: [],
+        ids: [],
       };
     }
     return acc;
@@ -42,20 +42,19 @@ export const normalizeContacts = (contacts: IApiResponse[]) => {
   let contactMapping = createAlphabetGrouping('contact');
   const alphabetCountMapping = createAlphabetGrouping('count');
 
-  contactMapping = sortContacts(contacts).reduce(
-    (acc, contact, index) => {
-      const userContact = createUserContact(contact, index);
-      const letterGroup = userContact.lastName[0].toUpperCase();
-      const objectIndex = `${userContact.lastName}__${index}`;
+  contactMapping = sortContacts(contacts).reduce((acc, contact, index) => {
+    const userContact = createUserContact(contact, index);
+    const letterGroup = userContact.lastName[0].toUpperCase();
 
-      // increase the alphabet count
-      alphabetCountMapping[letterGroup] += 1;
-      acc[letterGroup].contacts[objectIndex] = userContact;
+    // increase the alphabet count
+    alphabetCountMapping[letterGroup] += 1;
 
-      return acc;
-    },
-    contactMapping as IContactObject,
-  );
+    // add contact to the letter group and index to the id array
+    acc[letterGroup].contacts[index] = userContact;
+    acc[letterGroup].ids.push(index);
+
+    return acc;
+  }, contactMapping);
 
   return { contactMapping, alphabetCountMapping };
 };

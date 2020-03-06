@@ -1,40 +1,87 @@
 import React from 'react';
 
 import LetterButton from '../../atoms/LetterButton';
+import ContactCard from '../../ContactCard';
+
 import './style.scss';
 
 interface IContainerProps {
   alphabetCountMap: { [index: string]: number };
-  // handleAlphabetChange: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  contacts: any[];
+  contacts: any;
 }
 
 const Container: React.FC<IContainerProps> = props => {
+  const [activeContact, setActiveContact] = React.useState<IUserContact>(
+    {} as IUserContact,
+  );
+  const [activeContactGroup, setActiveContactGroup] = React.useState<string>(
+    'A',
+  );
+  const [selectedContactGroup, setSelectedContactGroup] = React.useState<
+    IContactGroup
+  >({} as IContactGroup);
+
+  React.useEffect(() => {
+    setSelectedContactGroup(props.contacts[activeContactGroup]);
+  }, [activeContactGroup, props.contacts]);
+
+  const handleButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const { value } = event.currentTarget.dataset;
+
+    //@ts-ignore
+    setActiveContactGroup(value);
+  };
+
+  const handleContactCardClick = (contact: IUserContact) => {
+    setActiveContact(contact);
+  };
+
+  const handleContactCardClose = () => {
+    setActiveContact({} as IUserContact);
+  };
+
   return (
     <div className="Container">
       <div className="Container-alphabet">
         {Object.keys(props.alphabetCountMap).map((letter, index) => {
           return (
             <div
-              key={`Container-alphabets-${letter}`}
+              key={`Container-alphabet__${letter}`}
               className="Container-alphabet-button"
             >
               <LetterButton
                 contactsCount={props.alphabetCountMap[letter]}
                 text={letter}
-                onClick={() => {}}
-                active={false}
+                onClickHandler={handleButtonClick}
+                active={letter === activeContactGroup}
               />
             </div>
           );
         })}
       </div>
-      <div>
+      <div className="Container-contacts">
         <header className="Container-header">
           <h1>Contacts List</h1>
+          <div className="Container-header-divider" />
         </header>
-        <div className="Container-contacts">
-          {/* This is where the contacts will be */}
+        <div className="Container-contacts-wrapper">
+          {selectedContactGroup &&
+            selectedContactGroup.ids &&
+            selectedContactGroup.ids.map(id => {
+              const contact = selectedContactGroup.contacts[id];
+              const selected =
+                `${contact.lastName}${contact.id}` ===
+                `${activeContact.lastName}${activeContact.id}`;
+              return (
+                <ContactCard
+                  key={`Container-contacts__${contact.id}`}
+                  contact={contact}
+                  selected={selected}
+                  onClickHandler={handleContactCardClick}
+                  onCloseHandler={handleContactCardClose}
+                />
+              );
+            })}
         </div>
       </div>
     </div>
