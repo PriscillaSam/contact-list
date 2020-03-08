@@ -52,34 +52,33 @@ const ContactCard: React.FC<IContactCardProps> = props => {
       </button>
       <div className="ContactCard-details">
         {props.selected ? (
-          <button
-            className="ContactCard-details-closeBtn"
-            type="button"
-            onClick={props.onCloseHandler}
-          >
-            x
-          </button>
-        ) : null}
-        {props.selected ? (
-          <div className="ContactCard-details-body">
-            <p>
-              Email - <br />
-              <span>{props.contact.email}</span>
-            </p>
-
-            <p>
-              Phone - <br />
-              <span>{props.contact.phone}</span>
-            </p>
-            <p>
-              Address - <br />
-              <span>{getContactAddress()}</span>
-            </p>
-            <p>
-              Postcode - <br />
-              <span>{props.contact.postcode}</span>
-            </p>
-          </div>
+          <>
+            <button
+              className="ContactCard-details-closeBtn"
+              type="button"
+              onClick={props.onCloseHandler}
+            >
+              x
+            </button>
+            <div className="ContactCard-details-body">
+              <p>
+                Email - <br />
+                <span>{props.contact.email}</span>
+              </p>
+              <p>
+                Phone - <br />
+                <span>{props.contact.phone}</span>
+              </p>
+              <p>
+                Address - <br />
+                <span>{getContactAddress()}</span>
+              </p>
+              <p>
+                Postcode - <br />
+                <span>{props.contact.postcode}</span>
+              </p>
+            </div>
+          </>
         ) : null}
       </div>
     </div>
