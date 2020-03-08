@@ -23,6 +23,7 @@ export const createUserContact = (
 const createAlphabetGrouping = (variant: 'contact' | 'count') => {
   return [...Array(26)].reduce((acc, _, index) => {
     const letter = String.fromCharCode(index + 65);
+
     if (variant === 'count') {
       acc[letter] = 0;
     } else {

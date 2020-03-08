@@ -1,101 +1,109 @@
+$light-grey: #f4f4f7;
+$dark-grey: #c4c4c4;
+$dark-blue: #3a2671;
+$darker-grey: #747070;
+
 .ContactCard {
   border-bottom: 1px solid rgba(229, 229, 229, 0.7);
   padding: 10px 0;
-  height: 50px;
 
   &-selected {
-    height: 200px;
     box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.15);
     border-radius: 5px;
   }
 
-  &-thumbnail {
+  &-button {
     border: unset;
     background: unset;
     display: flex;
     align-items: center;
     width: 100%;
-    &-avatar {
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      margin-right: 10px;
-    }
 
-    &-name {
+    .ContactCard-avatar {
+      border-radius: 50%;
+    }
+    .ContactCard-name {
       p {
-        margin-bottom: 0;
-        margin-top: 0;
         text-align: left;
         font-family: 'Titillium Web', sans-serif;
         font-weight: 600;
         font-size: 13px;
-        color: #747070;
+        color: $darker-grey;
 
         &:last-child {
-          color: #c4c4c4;
+          color: $dark-grey;
         }
+      }
+    }
+
+    &:disabled {
+      cursor: text;
+    }
+  }
+
+  &-thumbnail {
+    .ContactCard-avatar {
+      width: 40px;
+      height: 40px;
+      margin-right: 10px;
+      transition: all ease 0.4s;
+    }
+
+    .ContactCard-name {
+      p {
+        margin-bottom: 0;
+        margin-top: 0;
+      }
+    }
+  }
+
+  &-header {
+    padding: 10px 20px;
+    background: $light-grey;
+    position: relative;
+
+    .ContactCard-avatar {
+      margin-right: 20px;
+      transition: all ease 0.4s;
+
+      &-large {
+        width: 72px;
+        height: 72px;
       }
     }
   }
 
   &-details {
     position: relative;
+    transition: all ease-in 1s;
+    background: #db9730;
 
     &-closeBtn {
       position: absolute;
-      top: -5px;
-      right: -5px;
+      top: -10px;
+      right: 0px;
       border: unset;
       width: 30px;
       height: 30px;
       border-radius: 50%;
-      background: #3a2671;
-      color: #f4f4f7;
+      background: $dark-blue;
+      color: $light-grey;
       font-size: 14px;
-      outline: unset;
       font-weight: 600;
       font-family: 'Titillium Web', sans-serif;
       box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.15);
     }
 
-    &-header {
-      border: unset;
-      background: unset;
-      display: flex;
-      align-items: center;
-      padding: 10px 20px;
-    }
-
-    &-avatar {
-      border-radius: 50%;
-      margin-right: 10px;
-    }
-
-    &-name {
-      p {
-        text-align: left;
-        font-family: 'Titillium Web', sans-serif;
-        font-weight: 600;
-        font-size: 13px;
-        color: #747070;
-
-        &:last-child {
-          color: #c4c4c4;
-        }
-      }
-    }
-
     &-body {
-      background: #db9730;
-      color: #f4f4f7;
+      color: $light-grey;
       padding: 3px 5px 3px 20px;
+      transition: all ease-in 0.9s;
 
       p {
         font-family: 'Rochester', sans-serif;
         margin: 5px 0;
-        // display: flex;
       }
+
       span {
         font-family: 'Titillium Web', sans-serif;
         font-weight: 600;
@@ -105,7 +113,7 @@
 
   &:hover {
     border: unset;
-    background: #f4f4f7;
+    background: $light-grey;
     border-radius: 3px;
     box-shadow: 0px 5px 40px rgba(92, 92, 97, 0.12);
   }

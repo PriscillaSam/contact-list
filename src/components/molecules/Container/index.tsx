@@ -1,7 +1,7 @@
 import React from 'react';
 
 import LetterButton from '../../atoms/LetterButton';
-import ContactCard from '../../ContactCard';
+import ContactCard from '../../atoms/ContactCard';
 
 import './style.scss';
 
@@ -43,7 +43,7 @@ const Container: React.FC<IContainerProps> = props => {
   return (
     <div className="Container">
       <div className="Container-alphabet">
-        {Object.keys(props.alphabetCountMap).map((letter, index) => {
+        {Object.keys(props.alphabetCountMap).map(letter => {
           return (
             <div
               key={`Container-alphabet__${letter}`}
@@ -69,14 +69,15 @@ const Container: React.FC<IContainerProps> = props => {
             selectedContactGroup.ids &&
             selectedContactGroup.ids.map(id => {
               const contact = selectedContactGroup.contacts[id];
-              const selected =
+              const isSelected =
                 `${contact.lastName}${contact.id}` ===
                 `${activeContact.lastName}${activeContact.id}`;
+
               return (
                 <ContactCard
                   key={`Container-contacts__${contact.id}`}
                   contact={contact}
-                  selected={selected}
+                  selected={isSelected}
                   onClickHandler={handleContactCardClick}
                   onCloseHandler={handleContactCardClose}
                 />
