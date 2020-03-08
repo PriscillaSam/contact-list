@@ -19,6 +19,12 @@ const ContactCard: React.FC<IContactCardProps> = props => {
     'ContactCard-selected': props.selected,
   });
 
+  const buttonClassNames = classnames({
+    'ContactCard-button': true,
+    'ContactCard-thumbnail': !props.selected,
+    'ContactCard-header': props.selected,
+  });
+
   const getContactAddress = () => {
     const { street, city, state } = props.contact;
     return `${street}, ${city} ${state}`;
@@ -26,24 +32,26 @@ const ContactCard: React.FC<IContactCardProps> = props => {
 
   return (
     <div className={classNames}>
-      {!props.selected ? (
-        <button
-          onClick={handleClickEvent}
-          className="ContactCard-thumbnail"
-          type="button"
-        >
-          <img
-            src={props.contact.avatar.thumbnail}
-            alt="contact-avatar"
-            className="ContactCard-thumbnail-avatar"
-          />
-          <div className="ContactCard-thumbnail-name">
-            <p>{props.contact.fullName}</p>
-            <p>@{props.contact.username}</p>
-          </div>
-        </button>
-      ) : (
-        <div className="ContactCard-details">
+      <button
+        onClick={handleClickEvent}
+        className={buttonClassNames}
+        type="button"
+        disabled={props.selected}
+      >
+        <img
+          src={props.contact.avatar.medium}
+          alt="contact-avatar"
+          className={`ContactCard-avatar ${
+            props.selected ? 'ContactCard-avatar-large' : ''
+          }`}
+        />
+        <div className="ContactCard-name">
+          <p>{props.contact.fullName}</p>
+          <p>@{props.contact.username}</p>
+        </div>
+      </button>
+      <div className="ContactCard-details">
+        {props.selected ? (
           <button
             className="ContactCard-details-closeBtn"
             type="button"
@@ -51,17 +59,8 @@ const ContactCard: React.FC<IContactCardProps> = props => {
           >
             x
           </button>
-          <div className="ContactCard-details-header">
-            <img
-              src={props.contact.avatar.medium}
-              alt="contact-avatar"
-              className="ContactCard-details-avatar"
-            />
-            <div className="ContactCard-details-name">
-              <p>{props.contact.fullName}</p>
-              <p>@{props.contact.username}</p>
-            </div>
-          </div>
+        ) : null}
+        {props.selected ? (
           <div className="ContactCard-details-body">
             <p>
               Email - <br />
@@ -81,8 +80,8 @@ const ContactCard: React.FC<IContactCardProps> = props => {
               <span>{props.contact.postcode}</span>
             </p>
           </div>
-        </div>
-      )}
+        ) : null}
+      </div>
     </div>
   );
 };

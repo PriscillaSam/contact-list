@@ -37,21 +37,33 @@
 
     @media screen and (max-width: 500px) {
       width: 10%;
+      left: unset;
     }
   }
 
   &-contacts {
     margin-left: 7%;
     width: 90%;
-    // height: 92%;
+    height: 100%;
 
     &-wrapper {
-      max-height: 92%;
+      height: 85%;
       margin-top: 20px;
       overflow: scroll;
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      grid-column-gap: 10px;
+      grid-auto-rows: 70px;
+      grid-column-gap: 20px;
     }
+
+    @media screen and (max-width: 500px) {
+      margin-left: 16%;
+      width: 84%;
+    }
+  }
+
+  @media screen and (max-width: 500px) {
+    margin: 0;
+    width: 100%;
   }
 }
