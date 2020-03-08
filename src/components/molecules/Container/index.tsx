@@ -7,8 +7,10 @@ import './style.scss';
 
 interface IContainerProps {
   alphabetCountMap: { [index: string]: number };
-  contacts: any;
+  contacts: { [index: string]: IContactGroup };
 }
+
+const contactGroup: IContactGroup = { contacts: {}, ids: [] };
 
 const Container: React.FC<IContainerProps> = props => {
   const [activeContact, setActiveContact] = React.useState<IUserContact>(
@@ -19,7 +21,7 @@ const Container: React.FC<IContainerProps> = props => {
   );
   const [selectedContactGroup, setSelectedContactGroup] = React.useState<
     IContactGroup
-  >({} as IContactGroup);
+  >(contactGroup);
 
   React.useEffect(() => {
     setSelectedContactGroup(props.contacts[activeContactGroup]);
@@ -27,7 +29,6 @@ const Container: React.FC<IContainerProps> = props => {
 
   const handleButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     const { value } = event.currentTarget.dataset;
-
     //@ts-ignore
     setActiveContactGroup(value);
   };
@@ -59,30 +60,31 @@ const Container: React.FC<IContainerProps> = props => {
           );
         })}
       </div>
+
       <div className="Container-contacts">
         <header className="Container-header">
           <h1>Contacts List</h1>
           <div className="Container-header-divider" />
         </header>
-        <div className="Container-contacts-wrapper">
-          {selectedContactGroup &&
-            selectedContactGroup.ids &&
-            selectedContactGroup.ids.map(id => {
-              const contact = selectedContactGroup.contacts[id];
-              const isSelected =
-                `${contact.lastName}${contact.id}` ===
-                `${activeContact.lastName}${activeContact.id}`;
 
-              return (
-                <ContactCard
-                  key={`Container-contacts__${contact.id}`}
-                  contact={contact}
-                  selected={isSelected}
-                  onClickHandler={handleContactCardClick}
-                  onCloseHandler={handleContactCardClose}
-                />
-              );
-            })}
+        <div className="Container-contacts-wrapper">
+          {selectedContactGroup.ids.map(id => {
+            const contact = selectedContactGroup.contacts[id];
+
+            const isSelected =
+              `${contact.lastName}${contact.id}` ===
+              `${activeContact.lastName}${activeContact.id}`;
+
+            return (
+              <ContactCard
+                key={`Container-contacts__${contact.id}`}
+                contact={contact}
+                selected={isSelected}
+                onClickHandler={handleContactCardClick}
+                onCloseHandler={handleContactCardClose}
+              />
+            );
+          })}
         </div>
       </div>
     </div>

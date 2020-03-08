@@ -1,14 +1,16 @@
+@import '../../../variables.scss';
+
 .Error {
-  background: #f4f4f7;
+  background: $light-grey;
   box-shadow: 10px 4px 250px rgba(0, 0, 0, 0.25);
   padding: 50px;
   margin: auto;
 
   h2 {
-    color: rgb(253, 132, 132);
+    color: $red;
   }
 
   p {
-    color: #747070;
+    color: $darker-grey;
   }
 }

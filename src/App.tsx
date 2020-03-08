@@ -21,7 +21,7 @@ const App = () => {
   React.useEffect(() => {
     (async function() {
       try {
-        const { results } = await fetchContacts(200);
+        const { results } = await fetchContacts();
         const { contactMapping, alphabetCountMapping } = normalizeContacts(
           results,
         );

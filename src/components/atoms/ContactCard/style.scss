@@ -1,7 +1,4 @@
-$light-grey: #f4f4f7;
-$dark-grey: #c4c4c4;
-$dark-blue: #3a2671;
-$darker-grey: #747070;
+@import '../../../variables.scss';
 
 .ContactCard {
   border-bottom: 1px solid rgba(229, 229, 229, 0.7);
@@ -76,7 +73,7 @@ $darker-grey: #747070;
   &-details {
     position: relative;
     transition: all ease-in 1s;
-    background: #db9730;
+    background: $mustard-yellow;
 
     &-closeBtn {
       position: absolute;
@@ -97,7 +94,6 @@ $darker-grey: #747070;
     &-body {
       color: $light-grey;
       padding: 3px 5px 3px 20px;
-      transition: all ease-in 0.9s;
 
       p {
         font-family: 'Rochester', sans-serif;
