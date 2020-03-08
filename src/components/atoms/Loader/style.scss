@@ -1,3 +1,5 @@
+@import '../../../variables.scss';
+
 .spinner {
   content: '';
   position: absolute;
@@ -9,8 +11,8 @@
   margin-top: -30px;
   margin-left: -30px;
   border-radius: 50%;
-  border: 3px solid #d3d3d3;
-  border-top-color: #db9730;
+  border: 3px solid $dark-grey;
+  border-top-color: $mustard-yellow;
   animation: spinner 0.7s linear infinite;
 }
 

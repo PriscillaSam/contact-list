@@ -1,13 +1,15 @@
+@import '../../../variables.scss';
+
 .Container {
   width: 90%;
   margin: 5% auto;
-  background: #f4f4f7;
+  background: $light-grey;
   box-shadow: 10px 4px 250px rgba(0, 0, 0, 0.25);
   position: relative;
 
   &-header {
     h1 {
-      color: #c4c4c4;
+      color: $dark-grey;
       font-family: 'Roboto', sans-serif;
       font-weight: 400;
       margin-bottom: 10px;
@@ -16,7 +18,7 @@
     &-divider {
       width: 60px;
       height: 2px;
-      background: #e5e5e5;
+      background: $faint-grey;
     }
   }
 

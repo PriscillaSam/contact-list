@@ -1,22 +1,24 @@
+@import '../../../variables.scss';
+
 .LetterButton {
   border-radius: 4px;
   border: unset;
-  background: #3a2671;
+  background: $dark-blue;
   position: relative;
   width: 40px;
   height: 37px;
   font-size: 18px;
-  color: #ffffff;
+  color: $white;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
   transition: ease-out 0.4s;
 
   &-badge {
     width: 20px;
     height: 20px;
-    background: #ffffff;
+    background: $white;
     border-radius: 50%;
     font-size: 12px;
-    color: #332d2d;
+    color: $darker-grey;
     position: absolute;
     display: flex;
     justify-content: center;
@@ -27,16 +29,16 @@
   }
 
   &-active {
-    background: #db9730;
+    background: $mustard-yellow;
   }
 
   &-disabled {
     cursor: not-allowed;
-    background: #c4c4c4;
+    background: $dark-grey;
 
     .LetterButton-badge {
-      color: #c4c4c4;
-      background: #f0efef;
+      color: $dark-grey;
+      background: $muted-grey;
     }
   }
 }
