@@ -14,6 +14,7 @@ const ContactCard: React.FC<IContactCardProps> = props => {
     props.onClickHandler(props.contact);
   };
 
+  console.log('rendering');
   const classNames = classnames({
     ContactCard: true,
     'ContactCard-selected': props.selected,
@@ -85,4 +86,4 @@ const ContactCard: React.FC<IContactCardProps> = props => {
   );
 };
 
-export default ContactCard;
+export default React.memo(ContactCard);

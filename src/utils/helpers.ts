@@ -20,18 +20,13 @@ export const createUserContact = (
   };
 };
 
-const createAlphabetGrouping = (variant: 'contact' | 'count') => {
+const createGroupingStructure = () => {
   return [...Array(26)].reduce((acc, _, index) => {
     const letter = String.fromCharCode(index + 65);
-
-    if (variant === 'count') {
-      acc[letter] = 0;
-    } else {
-      acc[letter] = {
-        contacts: {},
-        ids: [],
-      };
-    }
+    acc[letter] = {
+      contacts: {},
+      ids: [],
+    };
     return acc;
   }, {});
 };
@@ -40,22 +35,17 @@ export const sortContacts = (contacts: IApiResponse[]) =>
   contacts.sort((a, b) => (a.name.last > b.name.last ? 1 : -1));
 
 export const normalizeContacts = (contacts: IApiResponse[]) => {
-  let contactMapping = createAlphabetGrouping('contact');
-  const alphabetCountMapping = createAlphabetGrouping('count');
+  let contactsMap = createGroupingStructure();
 
-  contactMapping = sortContacts(contacts).reduce((acc, contact, index) => {
+  contactsMap = sortContacts(contacts).reduce((acc, contact, index) => {
     const userContact = createUserContact(contact, index);
     const letterGroup = userContact.lastName[0].toUpperCase();
 
-    // increase the alphabet count
-    alphabetCountMapping[letterGroup] += 1;
-
-    // add contact to the letter group and index to the id array
     acc[letterGroup].contacts[index] = userContact;
     acc[letterGroup].ids.push(index);
 
     return acc;
-  }, contactMapping);
+  }, contactsMap);
 
-  return { contactMapping, alphabetCountMapping };
+  return contactsMap;
 };
