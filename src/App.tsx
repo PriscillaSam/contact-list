@@ -4,43 +4,13 @@ import Loader from './components/atoms/Loader';
 import Error from './components/atoms/Error';
 import Container from './components/molecules/Container';
 
-import fetchContacts from './utils/api';
-import { normalizeContacts } from './utils/helpers';
+import useContacts from './hooks/useContacts';
 import './style.scss';
 
-type AppState = 'fetching' | 'done' | 'error';
-type ContactsMap = {
-  [index: string]: IContactGroup;
-};
-
 const App = () => {
-  const [contacts, setContacts] = React.useState<ContactsMap>({});
-  const [alphabelCountMap, setAlphabetCountMap] = React.useState({});
-  const [state, setState] = React.useState<AppState>('fetching');
+  const [contactsMap, loadingState] = useContacts();
 
-  React.useEffect(() => {
-    (async function() {
-      try {
-        const { results } = await fetchContacts();
-        const { contactMapping, alphabetCountMapping } = normalizeContacts(
-          results,
-        );
-
-        setAlphabetCountMap(alphabetCountMapping);
-        setContacts(contactMapping);
-      } catch (error) {
-        setState('error');
-      }
-    })();
-  }, []);
-
-  React.useEffect(() => {
-    if (contacts['A']) {
-      setState('done');
-    }
-  }, [contacts]);
-
-  if (state === 'error') {
+  if (loadingState === 'error') {
     return (
       <div className="App">
         <Error />
@@ -50,10 +20,10 @@ const App = () => {
 
   return (
     <div className="App">
-      {state === 'fetching' ? (
+      {loadingState === 'fetching' ? (
         <Loader />
       ) : (
-        <Container alphabetCountMap={alphabelCountMap} contacts={contacts} />
+        <Container contactsMap={contactsMap} />
       )}
     </div>
   );

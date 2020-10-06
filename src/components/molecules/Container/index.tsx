@@ -1,91 +1,47 @@
-import React from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 
-import LetterButton from '../../atoms/LetterButton';
-import ContactCard from '../../atoms/ContactCard';
+import Contacts from '../Contacts';
+import Letters from '../Letters';
 
 import './style.scss';
 
 interface IContainerProps {
-  alphabetCountMap: { [index: string]: number };
-  contacts: { [index: string]: IContactGroup };
+  contactsMap: {
+    [index: string]: IContactGroup;
+  };
 }
 
-const contactGroup: IContactGroup = { contacts: {}, ids: [] };
-
 const Container: React.FC<IContainerProps> = props => {
-  const [activeContact, setActiveContact] = React.useState<IUserContact>(
-    {} as IUserContact,
-  );
-  const [activeContactGroup, setActiveContactGroup] = React.useState<string>(
-    'A',
-  );
-  const [selectedContactGroup, setSelectedContactGroup] = React.useState<
+  const [activeContactGroup, setActiveContactGroup] = useState<string>('A');
+  const [selectedContactGroup, setSelectedContactGroup] = useState<
     IContactGroup
-  >(contactGroup);
+  >(props.contactsMap['A']);
 
-  React.useEffect(() => {
-    setSelectedContactGroup(props.contacts[activeContactGroup]);
-  }, [activeContactGroup, props.contacts]);
+  useEffect(() => {
+    setSelectedContactGroup(props.contactsMap[activeContactGroup]);
+  }, [activeContactGroup, props.contactsMap]);
 
-  const handleButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    const { value } = event.currentTarget.dataset;
-    //@ts-ignore
-    setActiveContactGroup(value);
-  };
-
-  const handleContactCardClick = (contact: IUserContact) => {
-    setActiveContact(contact);
-  };
-
-  const handleContactCardClose = () => {
-    setActiveContact({} as IUserContact);
-  };
+  const handleButtonClick = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      const { value } = event.currentTarget.dataset;
+      setActiveContactGroup(value as string);
+    },
+    [],
+  );
 
   return (
     <div className="Container">
-      <div className="Container-alphabet">
-        {Object.keys(props.alphabetCountMap).map(letter => {
-          return (
-            <div
-              key={`Container-alphabet__${letter}`}
-              className="Container-alphabet-button"
-            >
-              <LetterButton
-                contactsCount={props.alphabetCountMap[letter]}
-                text={letter}
-                onClickHandler={handleButtonClick}
-                active={letter === activeContactGroup}
-              />
-            </div>
-          );
-        })}
-      </div>
-
+      <Letters
+        contactsMap={props.contactsMap}
+        handleButtonClick={handleButtonClick}
+        activeContactGroup={activeContactGroup}
+      />
       <div className="Container-contacts">
         <header className="Container-header">
           <h1>Contacts List</h1>
           <div className="Container-header-divider" />
         </header>
-
-        <div className="Container-contacts-wrapper">
-          {selectedContactGroup.ids.map(id => {
-            const contact = selectedContactGroup.contacts[id];
-
-            const isSelected =
-              `${contact.lastName}${contact.id}` ===
-              `${activeContact.lastName}${activeContact.id}`;
-
-            return (
-              <ContactCard
-                key={`Container-contacts__${contact.id}`}
-                contact={contact}
-                selected={isSelected}
-                onClickHandler={handleContactCardClick}
-                onCloseHandler={handleContactCardClose}
-              />
-            );
-          })}
-        </div>
+        <Contacts selectedContactGroup={selectedContactGroup} />
       </div>
     </div>
   );

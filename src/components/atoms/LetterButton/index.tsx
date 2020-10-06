@@ -16,6 +16,8 @@ const LetterButton: React.FC<ILetterButtonProps> = props => {
     'LetterButton-disabled': props.contactsCount === 0,
   });
 
+  console.log('rendered');
+
   return (
     <button
       className={classNames}
@@ -29,4 +31,4 @@ const LetterButton: React.FC<ILetterButtonProps> = props => {
   );
 };
 
-export default LetterButton;
+export default React.memo(LetterButton);
