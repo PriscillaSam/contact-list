@@ -1,5 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react';
 
+import ErrorBoundary from '../ErrorBoundary';
+import Error from '../../atoms/Error';
 import Contacts from '../Contacts';
 import Letters from '../Letters';
 
@@ -41,7 +43,9 @@ const Container: React.FC<IContainerProps> = props => {
           <h1>Contacts List</h1>
           <div className="Container-header-divider" />
         </header>
-        <Contacts selectedContactGroup={selectedContactGroup} />
+        <ErrorBoundary FallbackUI={<Error />}>
+          <Contacts selectedContactGroup={selectedContactGroup} />
+        </ErrorBoundary>
       </div>
     </div>
   );
