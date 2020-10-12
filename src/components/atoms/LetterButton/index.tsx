@@ -16,8 +16,6 @@ const LetterButton: React.FC<ILetterButtonProps> = props => {
     'LetterButton-disabled': props.contactsCount === 0,
   });
 
-  console.log('rendered');
-
   return (
     <button
       className={classNames}

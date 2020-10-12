@@ -14,7 +14,6 @@ const ContactCard: React.FC<IContactCardProps> = props => {
     props.onClickHandler(props.contact);
   };
 
-  console.log('rendering');
   const classNames = classnames({
     ContactCard: true,
     'ContactCard-selected': props.selected,
